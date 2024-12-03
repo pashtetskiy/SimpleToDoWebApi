@@ -1,0 +1,22 @@
+services:
+  todoapp:
+    image: ${DOCKER_REGISTRY-}todoapp
+    container_name: todoapp.api
+    build:
+      context: .
+      dockerfile: ToDoApp/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081" 
+  todoapp.db:
+    image: postgres:latest
+    container_name: todoapp.db
+    environment: 
+      - POSTGRES_DB=todoappdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./containers/todoapp-db:/var/lib/postgresql/data
+    ports:
+      - 5438:5432 
+  
